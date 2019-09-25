@@ -49,8 +49,11 @@ int main (int argc,char **argv) {
     bool multi_thread = false;
 
     int c = 1;
+
+
     while(c < argc){
         std::string arg = argv[c];
+        // std::cerr<<"arg: "<<arg<<std::endl;
         if(arg == "-t2s"){
             useT2S = true;
         }else if(arg == "-user"){
@@ -65,8 +68,10 @@ int main (int argc,char **argv) {
             model_path_char = argv[++c];
         }else if(arg == "-input") {
             input_path = argv[++c];
+            // std::cerr<<"input_path: "<<input_path<<std::endl;
         }else if(arg == "-output") {
             output_path = argv[++c];
+            // std::cerr<<"output_path: "<<output_path<<std::endl;
         }else if(arg == "-multi-thread") {
             multi_thread = true;
         }else{
