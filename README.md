@@ -13,6 +13,23 @@
 * [相关论文](#相关论文)
 * [作者](#作者)
 
+
+## FORK README
+
+```bash
+make
+
+# 终端输入 然后显示输出
+./thulac -seg_only -user userword.txt
+
+# 读文件 终端直接输出显示
+./thulac -seg_only -user userword.txt -input userword_input.txt
+
+# 读文件 输出到文件
+./thulac -seg_only -user userword.txt -input userword_input.txt -output userword_output.txt
+```
+
+
 ## 项目介绍
 
 THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与社会人文计算实验室研制推出的一套中文词法分析工具包，具有中文分词和词性标注功能。THULAC具有如下几个特点：
@@ -27,14 +44,14 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 		在当前路径下运行
 		make
 		会在当前目录下得到thulac和train_c
-		
+
 ## 使用方式
 ### 1.分词和词性标注程序
 #### 1.1.命令格式
 * C++版
 	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt]   从命令行输入输出
 	* ./thulac [-t2s] [-seg_only] [-deli delimeter] [-user userword.txt] [-intput inputfile] [-output outputfile] 从文本文件输入输出（注意均为UTF8文本）
-	
+
 #### 1.2.通用参数
 	-t2s			    将句子从繁体转化为简体
 	-seg_only		    只进行分词，不进行词性标注
@@ -44,7 +61,7 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 	-model_dir dir		设置模型文件所在文件夹，默认为models/
 	-input inputfile	设置输入文件地址
 	-output outputfile	设置输出文件地址
-	
+
 #### 1.3.接口使用示例
 
 新版的THULAC提供了分词和词性标注接口，将`include文件夹`拷贝到自己工程下的`include`中，通过在程序中引用`include"thulac.h"`，即可调用thulac提供的功能。
@@ -56,7 +73,7 @@ THULAC（THU Lexical Analyzer for Chinese）由清华大学自然语言处理与
 首先需要实例化`THULAC类`，然后可以调用以下接口：
 
 * `int init(const char* model_path = NULL, const char* user_path = NULL, int just_seg = 0, int t2s = 0, int ufilter = 0, char separator = '_');`初始化类，进行自定义设置。
-		
+
 		user_path           设置用户词典，用户词典中的词会被打上uw标签。词典中每一个词一行，UTF8编码
 		t2s                 默认False, 是否将句子从繁体转化为简体
 		just_seg            默认False, 时候只进行分词，不进行词性标注
@@ -78,27 +95,27 @@ THULAC需要分词和词性标注模型的支持，用户可以登录[thulac.thu
 
 #### 2.1.命令格式
 
-		./train_c [-s separator] [-b bigram_threshold] [-i iteration] training_filename model_filename   
+		./train_c [-s separator] [-b bigram_threshold] [-i iteration] training_filename model_filename
 		使用training_filename为训练集，训练出来的模型名字为model_filename
 
 #### 2.2.参数意义
-		
+
 		-s 				设置词与词性间的分隔符，默认为斜线/
 		-b				设置二字串的阀值，默认为1
 		-i				设置训练迭代的轮数，默认为15
-		
+
 #### 2.3.训练集格式
 我们使用默认的分隔符（斜线/）作为例子，训练集内容应为
-		
+
 		我/r 爱/vm 北京/ns 天安门/ns
-		
+
 类似的已经进行词性标注的句子。
 
 若要训练出只分词的模型，使用默认的分隔符（斜线/）作为例子，训练集内容应为
-		
-		我/ 爱/ 北京/ 天安门/ 
-		
-类似的句子。	
+
+		我/ 爱/ 北京/ 天安门/
+
+类似的句子。
 
 #### 2.4.使用训练出的模型
 将训练出来的模型覆盖原来models中的对应模型，之后执行分词程序即可使用训练出来的模型。
@@ -148,8 +165,8 @@ CNKI_journal.txt（51 MB）
 	v/动词 vm/能愿动词 vd/趋向动词 a/形容词 d/副词
 	h/前接成分 k/后接成分 i/习语 j/简称
 	r/代词 c/连词 p/介词 u/助词 y/语气助词
-	e/叹词 o/拟声词 g/语素 w/标点 x/其它 
-	
+	e/叹词 o/拟声词 g/语素 w/标点 x/其它
+
 ## THULAC模型介绍
 1. 我们随THULAC源代码附带了简单的分词模型Model_1，仅支持分词功能。该模型由人民日报分词语料库训练得到。
 
@@ -177,7 +194,7 @@ CNKI_journal.txt（51 MB）
 ## 历史
 
 |更新时间 | 更新内容|
-|:------------|:-------------:| 
+|:------------|:-------------:|
 |2016-09-29| 增加THULAC分词so版本。|
 |2016-03-31| 增加THULAC分词python版本。|
 |2016-01-20| 增加THULAC分词Java版本。|
@@ -189,16 +206,16 @@ CNKI_journal.txt（51 MB）
 2. 如有机构或个人拟将THULAC用于商业目的，请发邮件至thunlp@gmail.com洽谈技术许可协议。
 3. 欢迎对该工具包提出任何宝贵意见和建议。请发邮件至thunlp@gmail.com。
 4. 如果您在THULAC基础上发表论文或取得科研成果，请您在发表论文和申报成果时声明“使用了清华大学THULAC”，并按如下格式引用：
-	
+
 	* **中文： 孙茂松, 陈新雄, 张开旭, 郭志芃, 刘知远. THULAC：一个高效的中文词法分析工具包. 2016.**
-	
+
 	* **英文： Maosong Sun, Xinxiong Chen, Kaixu Zhang, Zhipeng Guo, Zhiyuan Liu. THULAC: An Efficient Lexical Analyzer for Chinese. 2016.**
-		
-   
+
+
 ## 相关论文
 * Zhongguo Li, Maosong Sun. Punctuation as Implicit Annotations for Chinese Word Segmentation. Computational Linguistics, vol. 35, no. 4, pp. 505-512, 2009.
 
-   
+
 ## 作者
 
 Maosong Sun （孙茂松，导师）,  Xinxiong Chen（陈新雄，博士生）,  Kaixu Zhang (张开旭，硕士生）,  Zhipeng Guo（郭志芃，本科生）,  Zhiyuan Liu（刘知远，助理教授）.

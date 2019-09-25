@@ -26,3 +26,13 @@
 *.exe
 *.out
 *.app
+
+
+.DS_Store
+
+models
+
+test_case
+thulac
+thulac_test
+train_c
