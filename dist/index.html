@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height">
+    <title>带图片遮罩的词云</title>
+    <style>::-webkit-scrollbar{display:none;}html,body{overflow:hidden;height:100%;margin:0;}</style>
+</head>
+<body>
+<div id="mountNode"></div>
+<script>/*Fixing iframe window.innerHeight 0 issue in Safari*/document.body.clientHeight;</script>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.g2-3.5.1/dist/g2.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/pkg/_antv.data-set-0.10.1/dist/data-set.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/assets/lib/jquery-3.2.1.min.js"></script>
+<script src="https://gw.alipayobjects.com/os/antv/assets/lib/lodash-4.17.4.min.js"></script>
+<script>
+  function getTextAttrs(cfg) {
+    return _.assign({}, cfg.style, {
+      fillOpacity: cfg.opacity,
+      fontSize: cfg.origin._origin.size,
+      rotate: cfg.origin._origin.rotate,
+      text: cfg.origin._origin.text,
+      textAlign: 'center',
+      fontFamily: cfg.origin._origin.font,
+      fill: cfg.color,
+      textBaseline: 'Alphabetic'
+    });
+  }
+
+  // 给point注册一个词云的shape
+  G2.Shape.registerShape('point', 'cloud', {
+    drawShape: function drawShape(cfg, container) {
+      var attrs = getTextAttrs(cfg);
+      return container.addShape('text', {
+        attrs: _.assign(attrs, {
+          x: cfg.x,
+          y: cfg.y
+        })
+      });
+    }
+  });
+  $.getJSON('./userword_output.json', function(data) {
+    var dv = new DataSet.View().source(data);
+    var range = dv.range('value');
+    var min = range[0];
+    var max = range[1];
+    var imageMask = new Image();
+    imageMask.crossOrigin = '';
+    imageMask.src = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1316580711,461885523&fm=26&gp=0.jpg';
+    imageMask.onload = function() {
+      // 取得图片比例
+      var imgWidth = imageMask.width;
+      var imgHeight = imageMask.height;
+      // 取得文字比例
+      var zWidth = window.innerWidth;
+      var fontSizeMax = zWidth / 23;
+      var fontSizeMin = fontSizeMax / 4;
+      var zPadding = window.innerWidth / 250;
+      // 绘制
+      dv.transform({
+        type: 'tag-cloud',
+        fields: ['name', 'value'],
+        imageMask: imageMask,
+        font: 'Verdana',
+        size: [window.innerWidth, window.innerWidth * imgHeight / imgWidth], // 宽高设置最好根据 imageMask 做调整
+        padding: zPadding,
+        timeInterval: 5000, // max execute time
+        rotate: function rotate() {
+          var random = ~~(Math.random() * 4) % 4;
+          if (random == 2) {
+            random = 0;
+          }
+          return random * 45; // 0, 90, 270
+        },
+        fontSize: function fontSize(d) {
+          return (d.value - min) / (max - min) * (fontSizeMax - fontSizeMin) + fontSizeMin;
+        }
+      });
+      var chart = new G2.Chart({
+        container: 'mountNode',
+        width: window.innerWidth, // 宽高设置最好根据 imageMask 做调整
+        height: window.innerWidth * imgHeight / imgWidth,
+        padding: 0
+      });
+      chart.source(dv, {
+        x: {
+          nice: false
+        },
+        y: {
+          nice: false
+        }
+      });
+      chart.legend(false);
+      chart.axis(false);
+      chart.tooltip({
+        showTitle: false
+      });
+      chart.coord().reflect();
+      chart.point().position('x*y').color('text').shape('cloud');
+      chart.render();
+    };
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "private": true,
+  "tnpm": {
+    "mode": "npm"
+  },
+  "dependencies": {
+    "shelljs": "^0.8.3"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.7",
+    "del": "^4.1.1",
+    "gulp": "^4.0.2",
+    "gulp-copy": "^4.0.1",
+    "gulp-less": "^4.0.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "moment": "^2.24.0",
+    "vinyl-paths": "^3.0.0"
+  },
+  "scripts": {
+    "watch": "gulp watch",
+    "dev": "./thulac -seg_only -user userword.txt -input userword_input.txt",
+    "segment": "./thulac -seg_only -user userword.txt -input userword_input.txt -output userword_output.txt"
+  }
+}

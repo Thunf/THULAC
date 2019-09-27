@@ -36,3 +36,9 @@ test_case
 thulac
 thulac_test
 train_c
+
+node_modules
+dist/**/*.json
+
+userword_input_format.txt
+userword_output.txt
