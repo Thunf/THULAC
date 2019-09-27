@@ -46,23 +46,27 @@
     var max = range[1];
     var imageMask = new Image();
     imageMask.crossOrigin = '';
-    imageMask.src = 'https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1316580711,461885523&fm=26&gp=0.jpg';
+    imageMask.src = './photo.png';
     imageMask.onload = function() {
       // 取得图片比例
+      var zWidth = window.innerWidth;
+      var zHeight = window.innerHeight;
       var imgWidth = imageMask.width;
       var imgHeight = imageMask.height;
+      var winRadio = zWidth / zHeight;
+      var imgRadio = imgWidth / imgHeight;
+      var whArr = imgRadio > winRadio ? [zWidth, zWidth / imgRadio] : [zHeight * imgRadio, zHeight];
       // 取得文字比例
-      var zWidth = window.innerWidth;
-      var fontSizeMax = zWidth / 23;
+      var fontSizeMax = whArr[0] / 23;
       var fontSizeMin = fontSizeMax / 4;
-      var zPadding = window.innerWidth / 250;
+      var zPadding = whArr[0] / 250;
       // 绘制
       dv.transform({
         type: 'tag-cloud',
         fields: ['name', 'value'],
         imageMask: imageMask,
         font: 'Verdana',
-        size: [window.innerWidth, window.innerWidth * imgHeight / imgWidth], // 宽高设置最好根据 imageMask 做调整
+        size: whArr, // 宽高设置最好根据 imageMask 做调整
         padding: zPadding,
         timeInterval: 5000, // max execute time
         rotate: function rotate() {
@@ -78,8 +82,8 @@
       });
       var chart = new G2.Chart({
         container: 'mountNode',
-        width: window.innerWidth, // 宽高设置最好根据 imageMask 做调整
-        height: window.innerWidth * imgHeight / imgWidth,
+        width: whArr[0], // 宽高设置最好根据 imageMask 做调整
+        height: whArr[1],
         padding: 0
       });
       chart.source(dv, {
