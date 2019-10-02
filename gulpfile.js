@@ -92,8 +92,8 @@ gulp.task('segment', function(done) {
   // 分词数据序列化
   const sortSegmentArr = Object.values(formatMap).sort((a, b) => b.oValue - a.oValue) //.splice(0, 200);
   // 十段分布比例
-  const arrConf = [2, 5, 8, 10, 15, 10, 8, 5, 3, 2];
-  // const arrConf = [2, 0, 1, 1, 2, 3, 4, 2];
+  // const arrConf = [2, 5, 8, 10, 15, 10, 8, 5, 3, 2];
+  const arrConf = [2, 0, 1, 1, 2, 3, 4, 2];
   const arrConfSum = +[0, ...arrConf].reduce((x, a) => x + a).toFixed(2);
   const arrRate = arrConf.map(val => +(val / arrConfSum).toFixed(2));
   // shell.echo('[task][segment]: arrRate', arrRate);
@@ -125,7 +125,7 @@ gulp.task('watch', gulp.series(
       shell.echo('[task]: watcher');
       // 监控output
       gulp.watch(
-        [ './userword_input.txt', ...EXCLUDES],
+        [ './userword.txt', './userword_input.txt', ...EXCLUDES],
         { event: 'all' },
         gulp.series('segment', function (done) {
           browserSync.reload();

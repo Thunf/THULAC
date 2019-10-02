@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,height=device-height">
     <title>带图片遮罩的词云</title>
-    <style>::-webkit-scrollbar{display:none;}html,body{overflow:hidden;height:100%;margin:0;}</style>
+    <style>::-webkit-scrollbar{display:none;}html,body{overflow:hidden;height:100%;margin:0;}#mountNode canvas{display:block;margin:auto;}</style>
 </head>
 <body>
 <div id="mountNode"></div>
@@ -58,7 +58,7 @@
       var whArr = imgRadio > winRadio ? [zWidth, zWidth / imgRadio] : [zHeight * imgRadio, zHeight];
       // 取得文字比例
       var fontSizeMax = whArr[0] / 23;
-      var fontSizeMin = fontSizeMax / 4;
+      var fontSizeMin = Math.max.apply(Math, [Math.sqrt(fontSizeMax), fontSizeMax / 2.5, 9]);
       var zPadding = whArr[0] / 250;
       // 绘制
       dv.transform({

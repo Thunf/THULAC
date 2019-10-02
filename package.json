@@ -19,7 +19,7 @@
   },
   "scripts": {
     "watch": "gulp watch",
-    "dev": "./thulac -seg_only -user userword.txt -input userword_input.txt",
-    "segment": "./thulac -seg_only -user userword.txt -input userword_input.txt -output userword_output.txt"
+    "segment": "gulp segment",
+    "thulac": "./thulac -seg_only -user userword.txt -input userword_input.txt"
   }
 }
