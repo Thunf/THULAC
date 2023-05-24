@@ -75,6 +75,7 @@ gulp.task('segment', function(done) {
   // 读取分词内容
   const segmentData = fs.readFileSync('./userword_output.txt');
   const segmentContent = segmentData.toString();
+  console.log('>> segmentContent', {segmentContent});
   // 清理分词内容
   const formatSegmentContent = format(segmentContent, outputRegExpArr, '\n');
   // 分词按行切割，去除单字词语

@@ -46,7 +46,8 @@
     var max = range[1];
     var imageMask = new Image();
     imageMask.crossOrigin = '';
-    imageMask.src = './photo.png';
+    // imageMask.src = './photo.png';
+    imageMask.src = 'https://gw.alipayobjects.com/mdn/rms_d89f6e/afts/img/A*9meiRbeDdaEAAAAAAAAAAABkARQnAQ';
     imageMask.onload = function() {
       // 取得图片比例
       var zWidth = window.innerWidth;
@@ -56,10 +57,15 @@
       var winRadio = zWidth / zHeight;
       var imgRadio = imgWidth / imgHeight;
       var whArr = imgRadio > winRadio ? [zWidth, zWidth / imgRadio] : [zHeight * imgRadio, zHeight];
-      // 取得文字比例
-      var fontSizeMax = whArr[0] / 23;
+      /**
+       * 更改文字比例
+       */
+      var fontSizeMax = whArr[0] / 25;
+      /**
+       * 更改文字间距
+       */
+      var zPadding = whArr[0] / 300;
       var fontSizeMin = Math.max.apply(Math, [Math.sqrt(fontSizeMax), fontSizeMax / 2.5, 9]);
-      var zPadding = whArr[0] / 250;
       // 绘制
       dv.transform({
         type: 'tag-cloud',
@@ -74,7 +80,8 @@
           if (random == 2) {
             random = 0;
           }
-          return random * 45; // 0, 90, 270
+          return random * 0; // 0, 90, 270
+          // return random * 45; // 0, 90, 270
         },
         fontSize: function fontSize(d) {
           return (d.value - min) / (max - min) * (fontSizeMax - fontSizeMin) + fontSizeMin;
